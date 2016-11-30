@@ -23,22 +23,37 @@
  *     ListNode(int x) : val(x), next(NULL) {}
  * };
  */
+
+#include<cstdlib>
+#include<ctime>
+#include <random>
+
+struct ListNode {
+    int val;
+    ListNode *next;
+
+    ListNode(int x) : val(x), next(NULL) {}
+};
+
+
 class Solution {
 public:
-    Solution(){
+    Solution() {
         srand(time(NULL));
     }
+
     /*
      * Here we have two ways to solve this problem:
      * 1) keep the list's nodes no change. only swap the data in the list node.
      * 2) swap the list node physically.
      */
     ListNode *swapPairs(ListNode *head) {
-        if(random()%2){
+        if (random() % 2) {
             return swapPairs1(head);
         }
         return swapPairs2(head);
     }
+
     /*just swap the node's value instead of node*/
     ListNode *swapPairs1(ListNode *head) {
         for (ListNode *p = head; p && p->next; p = p->next->next) {
@@ -48,7 +63,8 @@ public:
         }
         return head;
     }
-    /*swap the list nodes physically*/ 
+
+    /*swap the list nodes physically*/
     ListNode *swapPairs2(ListNode *head) {
         ListNode *h = NULL;
         //using `*p` to traverse the linked list
@@ -58,17 +74,17 @@ public:
             p->next = n->next;
             n->next = p;
             //using `h` as `p`'s previous node
-            if (h){
+            if (h) {
                 h->next = n;
             }
-            h=p;
-            
+            h = p;
+
             //determin the really 'head' pointer
-            if (head == p){
+            if (head == p) {
                 head = n;
             }
         }
-        
+
         return head;
     }
 };

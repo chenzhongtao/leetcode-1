@@ -22,34 +22,48 @@
 *               
 **********************************************************************************/
 
+/**
+ *
+ * P         H
+ * A       P   L
+ * Y     I       R
+ * P   A          H
+ * A P             S
+ * Y                R
+ *
+ * 其中的规律是 第一行和最后一行的间隔都是 10, (nRow-1)*2  第二行的间隔是[8,2,8,2...], (nRow-2)*2 , (2-1)*2
+ * 第r行的间隔是 [(nRow-r)*2 , (r-1)*2,(nRow-r)*2 , (r-1)*2,...]
+ * */
+
 #include <iostream>
 #include <vector>
 #include <string>
+
 using namespace std;
 
 string convert(string s, int nRows) {
     //The cases no need to do anything
-    if (nRows<=1 || nRows>=s.size()) return s;
-     
+    if (nRows <= 1 || nRows >= s.size()) return s;
+
     vector<string> r(nRows);
     int row = 0;
     int step = 1;
-    for(int i=0; i<s.size(); i ++) {
-        if (row == nRows-1) step = -1;
+    for (int i = 0; i < s.size(); i++) {
+        if (row == nRows - 1) step = -1;
         if (row == 0) step = 1;
         //cout << row <<endl;
         r[row] += s[i];
         row += step;
     }
-    
+
     string result;
-    for (int i=0; i<nRows; i++){
+    for (int i = 0; i < nRows; i++) {
         result += r[i];
     }
     return result;
 }
 
-int main(int argc, char**argv){
+int main(int argc, char **argv) {
 
     string s;
     int r;

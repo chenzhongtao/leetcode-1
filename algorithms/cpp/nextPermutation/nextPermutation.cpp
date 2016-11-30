@@ -4,7 +4,7 @@
 
 /********************************************************************************** 
 * 
-* Implement next permutation, which rearranges numbers into the lexicographically next 
+* Implement next permutation 排列, which rearranges numbers into the lexicographically next
 * greater permutation of numbers.
 * 
 * If such arrangement is not possible, it must rearrange it as the lowest possible order 
@@ -18,7 +18,8 @@
 *   1,2,3 → 1,3,2
 *   3,2,1 → 1,2,3
 *   1,1,5 → 1,5,1
-*               
+*
+*   (1,2,3是最小的排列， 3,2,1是最大的排列)
 **********************************************************************************/
 
 /*
@@ -45,13 +46,13 @@
  *     1 4 3 2   <-- 1) find the first place which num[i-1] < num[i]
  *     ^
  * 
- *     1 4 3 2   <-- 2) find the first number from n-1 to i which >= num[i-1]
+ *     1 4 3 2   <-- 2) find the first number from n-1 to i which >= num[i-1] （i 后面的数肯定是逆序的）
  *     ^     ^  
  * 
- *     2 4 3 1   <-- 3) swap them
+ *     2 4 3 1   <-- 3) swap them  交换两个数，交换后还能保证i，后面是逆序的
  *     ^     ^
  * 
- *     2 4 3 1   <-- 4) sort
+ *     2 4 3 1   <-- 4) sort （i 后面的数反转一下，变成正序）
  *       ^   ^
  *
  *     2 1 3 4   
@@ -67,30 +68,32 @@
 #include <iostream>
 #include <vector>
 #include <algorithm>
+
 using namespace std;
 
 
 void nextPermutation(vector<int> &num) {
 
-    if(num.size()<=1) return;
+    if (num.size() <= 1) return;
 
-    for(int i=num.size()-1; i>0; i--) {
-        if (num[i-1] < num[i]){
-            int j = num.size()-1;
-            while( num[i-1] >= num[j]) {
+    for (int i = num.size() - 1; i > 0; i--) {
+        if (num[i - 1] < num[i]) {
+            int j = num.size() - 1;
+            while (num[i - 1] >= num[j]) {
                 //pass;
                 j--;
             }
             int tmp = num[j];
-            num[j] = num[i-1];
-            num[i-1] = tmp;
+            num[j] = num[i - 1];
+            num[i - 1] = tmp;
             //sort works as well
-            //sort(num.begin()+i, num.end()); 
-            reverse(num.begin()+i, num.end()); 
-            return; 
+            //sort(num.begin()+i, num.end());
+            // i 后面的数是逆序的，反转一下就是正序了
+            reverse(num.begin() + i, num.end());
+            return;
         }
         //edge case: 4 3 2 1
-        if (i == 1 ){
+        if (i == 1) {
             //sort works as well
             //sort(num.begin(), num.end());
             reverse(num.begin(), num.end());
@@ -101,35 +104,35 @@ void nextPermutation(vector<int> &num) {
 }
 
 void printVector(vector<int> &num) {
-    for(int i=0; i<num.size(); i++) {
+    for (int i = 0; i < num.size(); i++) {
         cout << num[i] << " ";
-    } 
-    cout <<endl;
+    }
+    cout << endl;
 }
+
 bool isBeginVector(vector<int> &num) {
-    for(int i=0; i<num.size(); i++) {
-        if(num[i] != i+1) {
+    for (int i = 0; i < num.size(); i++) {
+        if (num[i] != i + 1) {
             return false;
         }
-    } 
+    }
     return true;
 }
 
-int main(int argc, char** argv)
-{
+int main(int argc, char **argv) {
     int n = 4;
-    if (argc>1){
+    if (argc > 1) {
         n = atoi(argv[1]);
     }
     vector<int> num;
-    for(int i=1; i<=n; i++){
+    for (int i = 1; i <= n; i++) {
         num.push_back(i);
     }
-    
-    while(true){
+
+    while (true) {
         printVector(num);
         nextPermutation(num);
-        if(isBeginVector(num)){
+        if (isBeginVector(num)) {
             break;
         }
     }

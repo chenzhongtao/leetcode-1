@@ -4,7 +4,7 @@
 
 /********************************************************************************** 
 * 
-* Determine whether an integer is a palindrome. Do this without extra space.
+* Determine whether an integer is a palindrome(回文). Do this without extra space.
 * 
 * 
 * Some hints:
@@ -27,39 +27,40 @@ class Solution {
 public:
 
     bool isPalindrome(int x) {
-        if (x<0) {
+        if (x < 0) {
             return false;
         }
-        
-        int len=1;
-        for (len=1; (x/len) >= 10; len*=10 );
-        
-        while (x != 0 ) {
+
+        int len = 1;
+        for (len = 1; (x / len) >= 10; len *= 10);
+
+        while (x != 0) {
             int left = x / len;
             int right = x % 10;
-            
-            if(left!=right){
+
+            if (left != right) {
                 return false;
             }
-            
-            x = (x%len) / 10;
-            len /= 100;
+
+            x = (x % len) / 10; // 去掉左右各一位
+            len /= 100; // 去掉了两位，所以要除以100
         }
         return true;
     }
-    
+
     bool isPalindrome2(int x) {
-        return (x>=0 && x == reverse(x));
+        return (x >= 0 && x == reverse(x));
     }
 
-private:    
+private:
+    // 这个函数可能会溢出
     int reverse(int x) {
-        int y=0;
+        int y = 0;
 
         int n;
-        while( x!=0 ){
-            n = x%10;
-            y = y*10 + n;
+        while (x != 0) {
+            n = x % 10;
+            y = y * 10 + n;
             x /= 10;
         }
         return y;
@@ -67,14 +68,12 @@ private:
 };
 
 
-
-int main()
-{
+int main() {
     Solution s;
-    printf("%d is %d\n", 0, s.isPalindrome(0) );
-    printf("%d is %d\n", -101, s.isPalindrome(-101) );
-    printf("%d is %d\n", 1001, s.isPalindrome(1001) );
-    printf("%d is %d\n", 1234321, s.isPalindrome(1234321) );
-    printf("%d is %d\n", 2147447412, s.isPalindrome(2147447412) );
-    printf("%d is %d\n", 2142, s.isPalindrome(2142) );
+    printf("%d is %d\n", 0, s.isPalindrome(0));
+    printf("%d is %d\n", -101, s.isPalindrome(-101));
+    printf("%d is %d\n", 1001, s.isPalindrome(1001));
+    printf("%d is %d\n", 1234321, s.isPalindrome(1234321));
+    printf("%d is %d\n", 2147447412, s.isPalindrome(2147447412));
+    printf("%d is %d\n", 2142, s.isPalindrome(2142));
 }

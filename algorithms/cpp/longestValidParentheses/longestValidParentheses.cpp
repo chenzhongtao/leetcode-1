@@ -5,7 +5,7 @@
 /********************************************************************************** 
 * 
 * Given a string containing just the characters '(' and ')', 
-* find the length of the longest valid (well-formed) parentheses substring.
+* find the length of the longest valid (well-formed) parentheses圆括号 substring.
 * 
 * For "(()", the longest valid parentheses substring is "()", which has length = 2.
 * 

@@ -4,7 +4,7 @@
 
 /********************************************************************************** 
 * 
-* Given n pairs of parentheses, write a function to generate all combinations of well-formed parentheses.
+* Given n pairs of parentheses（圆括号）, write a function to generate all combinations of well-formed parentheses.
 * 
 * For example, given n = 3, a solution set is:
 * 
@@ -12,6 +12,9 @@
 * 
 *               
 **********************************************************************************/
+/**
+ * 我的解法是使用递归算法， 用两个数来记录 ( 和 ) 的剩余数，如果( >= ) 只能用(, 其他可以用( 和 )
+ * */
 
 #include <stdlib.h>
 #include <iostream>

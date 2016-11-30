@@ -6,13 +6,19 @@
 * 
 * Suppose a sorted array is rotated at some pivot unknown to you beforehand.
 * 
-* (i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2).
+* (i.e., 0 1 2 4 5 6 7 might become 4 5 6 7 0 1 2). 被旋转一次的已排序序列
 * 
 * You are given a target value to search. If found in the array return its index, otherwise return -1.
 * 
 * You may assume no duplicate exists in the array.
 *               
 **********************************************************************************/
+
+/**
+ * 最后一个值为last，取中间那个值mid，如果mid小于last, 说明右边是正序的，左边是旋转的，如果mid大于last，说明左边是正序的，右边是旋转的
+ * 如果mid小于last，如果  mid < target < last, binary_search 右边, else rotate_search 左边
+ * 如果mid大于last， last < target < mid , binary_search 左边, else rotate_search 右边
+ * */
 
 #include <stdio.h>
 #include <stdlib.h>

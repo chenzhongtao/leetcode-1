@@ -29,9 +29,17 @@
  * times.
  ***************************************************************************************/
 
+
+
+#include <string>
+#include <vector>
+#include <sstream>
+#include <cstring>
+
+using namespace std;
 const int NO_OF_CHARS = 256;
 
-/* if every character appears at least k times, the whole string is ok. 
+/* if every character appears at least k times, the whole string is ok.
  * Otherwise split by a least frequent character.
  * 
  * Because it will always be too infrequent and thus can't be part of any ok substring
@@ -42,42 +50,42 @@ const int NO_OF_CHARS = 256;
 class Solution {
 public:
     int longestSubstring(string s, int k) {
-        
+
         //deal with edge cases
         if (s.size() == 0 || s.size() < k) return 0;
-        if (k==1) return s.size();
+        if (k == 1) return s.size();
 
         //declare a map for every char's counter
         int count[NO_OF_CHARS];
-        memset(count , 0, sizeof(count));
-        
+        memset(count, 0, sizeof(count));
+
         //counting every char
         for (char ch : s) {
             count[ch]++;
         }
-        
-        int i=0;
-        for ( i=0; i<NO_OF_CHARS; i++) {
-            if (count[i] !=0 && count[i] < k) break;
+
+        int i = 0;
+        for (i = 0; i < NO_OF_CHARS; i++) {
+            if (count[i] != 0 && count[i] < k) break;
         }
         //all of the chars meet the requirement
-        if ( i >= NO_OF_CHARS ) return s.size();
-        
+        if (i >= NO_OF_CHARS) return s.size();
+
         // find the most infrequent char
         char least = 0;
         for (int c = 0; c < NO_OF_CHARS; c++) {
             if (count[c] == 0) continue;
             if (least == 0) {
                 least = c;
-            } else if ( count[c] < count[least]) {
+            } else if (count[c] < count[least]) {
                 least = c;
             }
         }
-        
+
         //split the string and run them recursively
         vector<string> subs;
         split(s, least, subs);
-        
+
         int res = 0;
         for (string str: subs) {
             res = max(res, longestSubstring(str, k));
@@ -85,11 +93,11 @@ public:
         return res;
         return 0;
     }
-    
+
 private:
-    
-    inline int max(int x, int y) { return x>y? x:y; }
-    
+
+    inline int max(int x, int y) { return x > y ? x : y; }
+
     inline void split(const string &s, char delim, vector<string> &elems) {
         stringstream ss;
         ss.str(s);
@@ -105,5 +113,40 @@ private:
         vector<string> elems;
         split(s, delim, elems);
         return elems;
+    }
+};
+
+
+class Solution2 {
+public:
+    int lengthOfLongestSubstring(string s, int k) {
+        //deal with edge cases
+        if (s.size() == 0 || s.size() < k) return 0;
+        if (k == 1) return s.size();
+
+        //declare a map for every char's counter
+        int count[NO_OF_CHARS];
+        memset(count, 0, sizeof(count));
+
+        //counting every char
+        for (char ch : s) {
+            count[ch]++;
+        }
+
+        //然后扫描一遍，每个字母都判断一下是否大于K
+        int repMax = 0;
+        int repNow = 0;
+        for (char ch : s) {
+            if (count[ch] < k) {
+                repNow = 0;
+            } else {
+                repNow++;
+                if (repNow > repMax) {
+                    repMax++;
+                }
+            }
+
+        }
+        return repMax;
     }
 };
